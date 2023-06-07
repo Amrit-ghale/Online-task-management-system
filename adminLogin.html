@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Login</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 150px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        function login(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the entered username and password
+            var usernameInput = document.getElementById("username").value;
+            var passwordInput = document.getElementById("password").value;
+
+            // Check if the entered username and password match the default credentials
+            var defaultUsername = "admin";
+            var defaultPassword = "password";
+
+            if (usernameInput === defaultUsername && passwordInput === defaultPassword) {
+                // Successful login
+                alert("Login successful!");
+                // Redirect to the admin dashboard or perform any other necessary action
+                window.location.href = "dashboard.html"; // Replace "dashboard.html" with the desired page URL
+            } else {
+                // Failed login
+                alert("Invalid username or password. Please try again.");
+                // Clear the input fields
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+            }
+        }
+
+        // Attach the login function to the form's submit event
+        document.getElementById("loginForm").addEventListener("submit", login);
+    </script>
+</body>
+
+</html>

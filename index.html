@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid orange;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+            from,
+            to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: orange;
+            }
+        }
+
+        .subheading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .subheading h2 {
+            font-size: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid orange;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        .btn-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .btn-container a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TASK MANAGEMENT SYSTEM</h1>
+        </div>
+        <div class="subheading">
+            <h2>Earn Doing Task</h2>
+        </div>
+        <div class="btn-container">
+            <a href="memberLogin.html">Member Login</a>
+            <a href="adminLogin.html">Admin Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to delay the typewriter effect
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Function to simulate the typewriter effect
+        async function typewriterEffect(element) {
+            const speed = 100; // Typing speed in milliseconds
+            for (let i = 0; i < text.length; i++) {
+                element.innerHTML += text.charAt(i);
+                await delay(speed);
+            }
+        }
+
+        // Get the heading and subheading elements
+        const heading = document.querySelector('.header h1');
+        const subheading = document.querySelector('.subheading h2');
+
+        // Start the typewriter effect for heading and subheading
+        typewriterEffect(heading, heading.innerHTML);
+        typewriterEffect(subheading, subheading.innerHTML);
+    </script>
+</body>
+
+</html>

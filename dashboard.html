@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container2 {
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 50px;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .btn-logout {
+      background-color: red;
+      border-color: red;
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+.text-center {
+    margin-top: 50px;
+}
+    .card {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #fff;
+    }
+
+    .form-control {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+<div id="adminDashboard" style="display: none;">
+  <h2 class="text-center">Admin Dashboard</h2>
+  
+  <button onclick="logout()" class="btn btn-logout">Logout</button>
+
+  <div class="container2 mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="createTaskForm" class="card p-3">
+          <h5>Create Task</h5>
+          <div class="form-group">
+            <input type="text" id="taskName" class="form-control" placeholder="Task Name">
+          </div>
+          <div class="form-group">
+            <textarea id="taskDesc" class="form-control" placeholder="Task Description"></textarea>
+          </div>
+          <div class="form-group">
+            <input type="date" id="taskStartDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="date" id="taskEndDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="text" id="assignedMember" class="form-control" placeholder="Assigned Member Email">
+          </div>
+          <div class="form-group">
+            <input type="number" id="hourlyRate" class="form-control" placeholder="Hourly Rate">
+          </div>
+          <button onclick="createTask()" class="btn btn-secondary">Create Task</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id="taskList" class="card p-3">
+          <!-- Task list content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="userDashboard" style="display: none;">
+  <h2 class="text-center">User Dashboard</h2>
+  
+  <button onclick="logout()" class="btn btn-logout">Logout</button>
+
+  <div id="userTaskList" class="container2"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

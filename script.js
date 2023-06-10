@@ -5,12 +5,14 @@ var users = {
   var tasks = [];
   var loggedInUser = '';
   
+  // check if users data exists in localStorage, if not, initialize it.
   if (!localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify(users));
   } else {
     users = JSON.parse(localStorage.getItem('users'));
   }
   
+  //check if the task data exists in localStorage, if yes, laod it
   if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
   }
@@ -28,8 +30,8 @@ var users = {
   
   function showSignupForm() {
     document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('signupForm').style.display = 'block';
-  }
+    document.getElementById('signupForm').style.display = 'block';  
+}
   
   function login(event) {
     event.preventDefault();
@@ -39,6 +41,7 @@ var users = {
     if (users[username] && users[username].password === password) {
       loggedInUser = username;
       localStorage.setItem('loggedInUser', loggedInUser);
+      window.location.href = 'dashboard.html';
       document.getElementById('loginForm').style.display = 'none';
   
       if (username === 'admin') {
@@ -68,9 +71,11 @@ var users = {
       localStorage.setItem('users', JSON.stringify(users));
       loggedInUser = username;
       localStorage.setItem('loggedInUser', loggedInUser);
+      window.location.href = 'dashboard.html';
       document.getElementById('signupForm').style.display = 'none';
       document.getElementById('userDashboard').style.display = 'block';
       loadUserDashboard();
+      
     }
   }
   
@@ -188,83 +193,93 @@ var users = {
       taskList.appendChild(taskCard);
     });
   }
-  
   function loadUserDashboard() {
     var userTaskList = document.getElementById('userTaskList');
     userTaskList.innerHTML = '';
-    tasks.forEach(task => {
-      if (task.assignedTo === users[loggedInUser].email) {
-        var taskStatus = task.completed ? 'Completed' : 'In Progress';
-        var taskStatusClass = task.completed ? 'text-success' : 'text-info';
   
-        var taskCard = document.createElement('div');
-        taskCard.className = 'card mb-3';
+    if (tasks.length === 0) {
+      // No tasks assigned
+      var noTasksMessage = document.createElement('p');
+      noTasksMessage.innerText = 'No tasks assigned';
+      noTasksMessage.style.textAlign = 'center'; // Center align the message
+      userTaskList.appendChild(noTasksMessage);
+    } else {
+      tasks.forEach(task => {
+        var assignedUser = Object.values(users).find(user => user.email === task.assignedTo);
   
-        var cardBody = document.createElement('div');
-        cardBody.className = 'card-body';
+        if (assignedUser && assignedUser.email === users[loggedInUser].email) {
+          var taskStatus = task.completed ? 'Completed' : 'In Progress';
+          var taskStatusClass = task.completed ? 'text-success' : 'text-info';
   
-        var taskTitle = document.createElement('h5');
-        taskTitle.className = 'card-title';
-        taskTitle.innerText = `${task.name} (${taskStatus})`;
+          var taskCard = document.createElement('div');
+          taskCard.className = 'card mb-3';
   
-        var taskDescription = document.createElement('p');
-        taskDescription.className = 'card-text';
-        taskDescription.innerText = task.description;
+          var cardBody = document.createElement('div');
+          cardBody.className = 'card-body';
   
-        var taskStart = document.createElement('p');
-        taskStart.innerText = `Start: ${task.start}`;
+          var taskTitle = document.createElement('h5');
+          taskTitle.className = 'card-title';
+          taskTitle.innerText = `${task.name} (${taskStatus})`;
   
-        var taskEnd = document.createElement('p');
-        taskEnd.innerText = `End: ${task.end}`;
+          var taskDescription = document.createElement('p');
+          taskDescription.className = 'card-text';
+          taskDescription.innerText = task.description;
   
-        var taskRate = document.createElement('p');
-        taskRate.innerText = `Rate: ${task.rate}`;
+          var taskStart = document.createElement('p');
+          taskStart.innerText = `Start: ${task.start}`;
   
-        cardBody.appendChild(taskTitle);
-        cardBody.appendChild(taskDescription);
-        cardBody.appendChild(taskStart);
-        cardBody.appendChild(taskEnd);
-        cardBody.appendChild(taskRate);
+          var taskEnd = document.createElement('p');
+          taskEnd.innerText = `End: ${task.end}`;
   
-        if (task.completed) {
-          var hoursWorked = document.createElement('p');
-          hoursWorked.innerText = `Hours Worked: ${task.hoursWorked}`;
+          var taskRate = document.createElement('p');
+          taskRate.innerText = `Rate: ${task.rate}`;
   
-          var taskCost = document.createElement('p');
-          taskCost.innerText = `Cost: $${task.cost}`;
+          cardBody.appendChild(taskTitle);
+          cardBody.appendChild(taskDescription);
+          cardBody.appendChild(taskStart);
+          cardBody.appendChild(taskEnd);
+          cardBody.appendChild(taskRate);
   
-          cardBody.appendChild(hoursWorked);
-          cardBody.appendChild(taskCost);
-        } else {
-          var form = document.createElement('form');
-          form.onsubmit = function (event) {
-            completeTask(event, task.id);
-          };
+          if (task.completed) {
+            var hoursWorked = document.createElement('p');
+            hoursWorked.innerText = `Hours Worked: ${task.hoursWorked}`;
   
-          var hoursWorkedLabel = document.createElement('label');
-          hoursWorkedLabel.innerText = 'Hours worked:';
+            var taskCost = document.createElement('p');
+            taskCost.innerText = `Cost: $${task.cost}`;
   
-          var hoursWorkedInput = document.createElement('input');
-          hoursWorkedInput.id = `hoursWorked${task.id}`;
-          hoursWorkedInput.type = 'number';
-          hoursWorkedInput.min = '0';
+            cardBody.appendChild(hoursWorked);
+            cardBody.appendChild(taskCost);
+          } else {
+            var form = document.createElement('form');
+            form.onsubmit = function (event) {
+              completeTask(event, task.id);
+            };
   
-          var submitButton = document.createElement('button');
-          submitButton.className = 'btn btn-primary';
-          submitButton.type = 'submit';
-          submitButton.innerText = 'Mark as Complete';
+            var hoursWorkedLabel = document.createElement('label');
+            hoursWorkedLabel.innerText = 'Hours worked:';
   
-          form.appendChild(hoursWorkedLabel);
-          form.appendChild(hoursWorkedInput);
-          form.appendChild(submitButton);
+            var hoursWorkedInput = document.createElement('input');
+            hoursWorkedInput.id = `hoursWorked${task.id}`;
+            hoursWorkedInput.type = 'number';
+            hoursWorkedInput.min = '0';
   
-          cardBody.appendChild(form);
+            var submitButton = document.createElement('button');
+            submitButton.className = 'btn btn-primary';
+            submitButton.type = 'submit';
+            submitButton.innerText = 'Mark as Complete';
+  
+            form.appendChild(hoursWorkedLabel);
+            form.appendChild(hoursWorkedInput);
+            form.appendChild(submitButton);
+  
+            cardBody.appendChild(form);
+          }
+  
+          taskCard.appendChild(cardBody);
+          userTaskList.appendChild(taskCard);
         }
-  
-        taskCard.appendChild(cardBody);
-        userTaskList.appendChild(taskCard);
-      }
-    });
+      });
+    }
   }
   
   
@@ -337,6 +352,7 @@ var users = {
     }
   }
   
+  
   function deleteTask(taskId) {
     var confirmDelete = confirm('Are you sure you want to delete this task?');
     if (confirmDelete) {
@@ -368,6 +384,7 @@ var users = {
   
   function logout() {
     loggedInUser = '';
+    window.location.href = 'index.html';
     localStorage.setItem('loggedInUser', loggedInUser);
     document.getElementById('adminDashboard').style.display = 'none';
     document.getElementById('userDashboard').style.display = 'none';

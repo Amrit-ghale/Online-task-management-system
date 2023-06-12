@@ -16,9 +16,11 @@ var users = {
   if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
   }
-  
+   // Check if a user is logged in or not.
   if (localStorage.getItem('loggedInUser')) {
     loggedInUser = localStorage.getItem('loggedInUser');
+
+    //Check if the logged-in user is admin
     if (loggedInUser === 'admin') {
       document.getElementById('adminDashboard').style.display = 'block';
       loadAdminDashboard();
@@ -38,6 +40,7 @@ var users = {
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
   
+    // Validating the username and the password
     if (users[username] && users[username].password === password) {
       loggedInUser = username;
       localStorage.setItem('loggedInUser', loggedInUser);
@@ -62,11 +65,13 @@ var users = {
     var password = document.getElementById('newPassword').value;
     var email = document.getElementById('newEmail').value;
   
+    // validating the input fields.
     if (!username || !password || !email) {
       alert('Please enter a username, password, and email');
     } else if (users[username]) {
       alert('Username is already taken');
     } else {
+      //create a new user
       users[username] = { password: password, email: email };
       localStorage.setItem('users', JSON.stringify(users));
       loggedInUser = username;
@@ -87,9 +92,11 @@ var users = {
     var assignedMember = document.getElementById('assignedMember').value;
     var hourlyRate = document.getElementById('hourlyRate').value;
   
+    //Validate the input fields.
     if (!taskName || !taskDesc || !taskStartDate || !taskEndDate || !assignedMember || !hourlyRate) {
       alert('Please fill in all fields');
     } else {
+      //create a new task
       var taskId = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
       var task = {
         id: taskId,
@@ -101,7 +108,7 @@ var users = {
         rate: hourlyRate,
         completed: false,
         hoursWorked: 0,
-        completionDate: '',
+        completionDate: '', //Added comment: Initialie the hours worked to 0 for a new task.
         cost: 0
       };
       tasks.push(task);
@@ -361,6 +368,8 @@ var users = {
       loadAdminDashboard();
     }
   }
+
+
   
   function clearTaskForm() {
     var taskNameInput = document.getElementById('taskName');
@@ -369,7 +378,7 @@ var users = {
     var taskEndDateInput = document.getElementById('taskEndDate');
     var assignedMemberInput = document.getElementById('assignedMember');
     var hourlyRateInput = document.getElementById('hourlyRate');
-  
+  // clear the input fields.
     taskNameInput.value = '';
     taskDescInput.value = '';
     taskStartDateInput.value = '';

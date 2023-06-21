@@ -58,7 +58,20 @@ var users = {
       alert('Invalid username or password');
     }
   }
-  
+//  function updateFinishDate() {
+//        // Get the start date value
+//        var startDate = new Date(document.getElementById('taskStartDate').value);
+//
+//        // Calculate the minimum finish date (start date + 1 day)
+//        var minFinishDate = new Date(startDate);
+//        minFinishDate.setDate(minFinishDate.getDate() + 1);
+//
+//        // Format the minimum finish date as yyyy-mm-dd
+//        var formattedMinFinishDate = minFinishDate.toISOString().split("T")[0];
+//
+//        // Set the minimum finish date for the finish date input field
+//        document.getElementById("taskEndDate").setAttribute("min", formattedMinFinishDate);
+//      }
   function signup(event) {
     event.preventDefault();
     var username = document.getElementById('newUsername').value;
@@ -399,4 +412,18 @@ var users = {
     document.getElementById('userDashboard').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
   }
-  
+
+   function updateFinishDate() {
+      // Get the start date value
+      var startDate = new Date(document.getElementById("taskStartDate").value);
+
+      // Calculate the minimum finish date (start date + 1 day)
+      var minFinishDate = new Date(startDate);
+      minFinishDate.setDate(minFinishDate.getDate() + 1);
+
+      // Format the minimum finish date as yyyy-mm-dd
+      var formattedMinFinishDate = minFinishDate.toISOString().split("T")[0];
+
+      // Set the minimum finish date for the finish date input field
+      document.getElementById("taskEndDate").setAttribute("min", formattedMinFinishDate);
+    }
